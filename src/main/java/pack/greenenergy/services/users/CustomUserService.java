@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pack.greenenergy.entities.users.User;
+import pack.greenenergy.exception.ResourceNotFoundException;
 import pack.greenenergy.repositories.users.UserRepository;
 
 @Service
@@ -17,7 +18,14 @@ public class CustomUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .orElseThrow(
-                        () -> new UsernameNotFoundException("User not found with username: " + username)
+                        () -> new ResourceNotFoundException("User not found with email: " + username)
+                );
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User not found with email: " + email)
                 );
     }
 
