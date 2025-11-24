@@ -1,4 +1,4 @@
-package pack.greenenergy.controllers;
+package pack.greenenergy.controllers.users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,16 +8,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import pack.greenenergy.dtos.LoginRequest;
-import pack.greenenergy.dtos.RegisterRequest;
-import pack.greenenergy.dtos.AuthResponse;
-import pack.greenenergy.entities.Role;
-import pack.greenenergy.entities.User;
-import pack.greenenergy.repositories.UserRepository;
+import pack.greenenergy.dtos.users.LoginRequest;
+import pack.greenenergy.dtos.users.RegisterRequest;
+import pack.greenenergy.dtos.users.AuthResponse;
+import pack.greenenergy.entities.users.Role;
+import pack.greenenergy.entities.users.User;
 import pack.greenenergy.security.JwtUtils;
-import pack.greenenergy.services.CustomUserService;
-import pack.greenenergy.services.RoleService;
-import pack.greenenergy.services.UserMapper;
+import pack.greenenergy.services.users.CustomUserService;
+import pack.greenenergy.services.users.RoleService;
+import pack.greenenergy.services.users.UserMapper;
 
 import java.util.Set;
 

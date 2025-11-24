@@ -1,12 +1,12 @@
-package pack.greenenergy.services;
+package pack.greenenergy.services.users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pack.greenenergy.entities.User;
-import pack.greenenergy.repositories.UserRepository;
+import pack.greenenergy.entities.users.User;
+import pack.greenenergy.repositories.users.UserRepository;
 
 @Service
 @RequiredArgsConstructor

@@ -1,8 +1,8 @@
-package pack.greenenergy.services;
+package pack.greenenergy.services.users;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import pack.greenenergy.entities.User;
+import pack.greenenergy.entities.users.User;
 
 @Service
 public class UserMapper {

@@ -3,8 +3,8 @@ package pack.greenenergy.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
-import pack.greenenergy.entities.Role;
-import pack.greenenergy.entities.User;
+import pack.greenenergy.entities.users.Role;
+import pack.greenenergy.entities.users.User;
 
 import java.security.Key;
 import java.util.Date;

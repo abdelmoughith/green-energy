@@ -1,4 +1,4 @@
-package pack.greenenergy.entities;
+package pack.greenenergy.entities.users;
 
 import jakarta.persistence.*;
 import lombok.Data;

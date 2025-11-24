@@ -1,11 +1,11 @@
-package pack.greenenergy.services;
+package pack.greenenergy.services.users;
 
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pack.greenenergy.entities.Role;
-import pack.greenenergy.repositories.RoleRepository;
+import pack.greenenergy.entities.users.Role;
+import pack.greenenergy.repositories.users.RoleRepository;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pack.greenenergy.services.CustomUserService;
+import pack.greenenergy.services.users.CustomUserService;
 
 import java.io.IOException;
 

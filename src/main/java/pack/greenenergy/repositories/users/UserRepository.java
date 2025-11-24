@@ -1,7 +1,7 @@
-package pack.greenenergy.repositories;
+package pack.greenenergy.repositories.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pack.greenenergy.entities.User;
+import pack.greenenergy.entities.users.User;
 
 import java.util.Optional;
 
