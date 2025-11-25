@@ -57,4 +57,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return super.shouldNotFilter(request);
+        /**
+        String path = request.getRequestURI();
+        return path.equals("/graphql")
+                || path.startsWith("/graphiql")
+                || path.startsWith("/auth");
+         **/
+    }
+
 }

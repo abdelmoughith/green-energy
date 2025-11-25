@@ -9,6 +9,8 @@ import pack.greenenergy.entities.users.User;
 import pack.greenenergy.exception.ResourceNotFoundException;
 import pack.greenenergy.repositories.users.UserRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserService implements UserDetailsService {
@@ -37,4 +39,7 @@ public class CustomUserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }
