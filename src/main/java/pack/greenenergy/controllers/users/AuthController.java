@@ -1,10 +1,10 @@
 package pack.greenenergy.controllers.users;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pack.greenenergy.dtos.users.LoginRequest;
@@ -32,7 +32,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
         if (customUserService.existsByEmail(request.email())) {
             throw new ValidationException("Email already exists");
         }
@@ -50,13 +50,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+
+        User user = customUserService.findByEmail(request.email());
         // Authentication authentication =
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );
 
-        User user = customUserService.findByEmail(request.email());
         String jwt = jwtUtils.generateToken(user);
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
