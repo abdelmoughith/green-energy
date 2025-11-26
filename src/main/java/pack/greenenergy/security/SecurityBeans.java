@@ -33,7 +33,7 @@ public class SecurityBeans {
                         .requestMatchers("/graphiql/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/test").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
