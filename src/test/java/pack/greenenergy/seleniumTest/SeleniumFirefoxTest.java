@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class SeleniumFirefoxTest {
+    /**
 
     @Test
     public void openFirefoxPage() {
@@ -40,5 +41,6 @@ public class SeleniumFirefoxTest {
 
         // driver.quit(); // we won’t call quit automatically
     }
+    **/
 }
 

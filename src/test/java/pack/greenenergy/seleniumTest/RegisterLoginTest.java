@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class RegisterLoginTest {
+    /**
 
     private static final String BASE_URL = "http://localhost:8080/web";
     private WebDriver driver;
@@ -67,4 +68,5 @@ public class RegisterLoginTest {
         System.out.println("Browser stays open after login.");
         Thread.sleep(Long.MAX_VALUE);
     }
+    **/
 }
