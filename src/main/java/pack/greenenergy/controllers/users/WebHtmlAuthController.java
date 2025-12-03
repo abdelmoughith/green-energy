@@ -13,7 +13,7 @@ import pack.greenenergy.dtos.users.AuthResponse;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/web")
-public class WebAuthController {
+public class WebHtmlAuthController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
