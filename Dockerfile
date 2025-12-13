@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/green-energy-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port your app runs on
-EXPOSE 8080
+EXPOSE 8880
 
 # Run the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
