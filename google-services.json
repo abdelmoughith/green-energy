@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "543214380138",
+    "firebase_url": "https://indus-532b7-default-rtdb.firebaseio.com",
+    "project_id": "indus-532b7",
+    "storage_bucket": "indus-532b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543214380138:android:19f12a9e094c68b9b0d613",
+        "android_client_info": {
+          "package_name": "com.example.indusbm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3tvhdzJOEcurCmxfoW9HdS1UFl5PL6NI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

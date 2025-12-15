@@ -21,7 +21,7 @@ public class FinancementController {
     private final FinancementService financementService;
     private final JwtUtils jwtUtils;
 
-    private Long userId(HttpServletRequest req) {
+    private Long extractUserIdFromRequest(HttpServletRequest req) {
         String auth = req.getHeader("Authorization");
         if (auth == null || !auth.startsWith("Bearer ")) return null;
         return jwtUtils.extractUserId(auth.substring(7));
@@ -34,12 +34,16 @@ public class FinancementController {
             @RequestBody FinancementRequest req,
             HttpServletRequest request
     ) {
-        Long uid = userId(request);
+        Long uid = extractUserIdFromRequest(request);
+        if (uid == null) {
+            return ResponseEntity.status(401).build(); // Unauthorized
+        }
 
         Financement f = financementService.financerProjet(projectId, uid, req.getMontant());
 
         return ResponseEntity.ok(toResponse(f));
     }
+
 
     // ---------------- GET ALL ----------------
     @GetMapping

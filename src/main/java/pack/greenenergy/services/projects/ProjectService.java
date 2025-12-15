@@ -3,7 +3,9 @@ package pack.greenenergy.services.projects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import pack.greenenergy.dtos.projects.ProjectRequest;
+import pack.greenenergy.dtos.projects.ProjectWithDistance;
 import pack.greenenergy.entities.projects.Project;
 import pack.greenenergy.entities.projects.StatutProjet;
 import pack.greenenergy.entities.projects.TypeEnergie;
@@ -12,23 +14,31 @@ import pack.greenenergy.exception.ForbiddenException;
 import pack.greenenergy.exception.ResourceNotFoundException;
 import pack.greenenergy.repositories.projects.ProjectRepository;
 import pack.greenenergy.repositories.users.UserRepository;
+import pack.greenenergy.services.firebase.ImageStorageServiceCloud;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final ImageStorageServiceCloud imageStorageServiceCloud;
 
     // ---------------- CREATE ----------------
-    public Project createProject(ProjectRequest dto, Long ownerId) {
+    @Transactional
+    public Project createProject(
+            ProjectRequest dto,
+            Long ownerId,
+            MultipartFile image
+    ) throws IOException {
         User owner = userRepository.findById(ownerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
 
         Project p = new Project();
+        p.setUser(owner);
         p.setTitre(dto.getTitre());
         p.setDescription(dto.getDescription());
         p.setRegion(dto.getRegion());
@@ -42,6 +52,18 @@ public class ProjectService {
         p.setProprietaire(owner);
         p.setDateCreation(java.time.LocalDateTime.now());
         p.setMontantCollecte(0.0);
+        p.setLatitude(dto.getLatitude());
+        p.setLongitude(dto.getLongitude());
+
+
+        if (image != null) {
+            String imageUrl = imageStorageServiceCloud.saveImage(image);
+
+            p.setImageUrl(
+                    imageUrl
+            );
+        }
+
 
         return projectRepository.save(p);
     }
@@ -92,4 +114,48 @@ public class ProjectService {
                 .map(p -> p.getProprietaire().getId().equals(userId))
                 .orElse(false);
     }
+
+    // SAVING
+    public boolean saveAnnonce(Long userId, Long annonceId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Project> annonceOpt = projectRepository.findById(annonceId);
+
+        if (userOpt.isPresent() && annonceOpt.isPresent()) {
+            User user = userOpt.get();
+            Project annonce = annonceOpt.get();
+            user.getSavedProjects().add(annonce);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    // unsave
+    public boolean unsaveAnnonce(Long userId, Long annonceId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Project> annonceOpt = projectRepository.findById(annonceId);
+
+        if (userOpt.isPresent() && annonceOpt.isPresent()) {
+            User user = userOpt.get();
+            Project annonce = annonceOpt.get();
+
+            user.getSavedProjects().remove(annonce);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    // get saved post
+    public Set<Project> getSavedAnnonces(Long userId) {
+        return userRepository.findById(userId)
+                .map(User::getSavedProjects)
+                .orElse(Collections.emptySet());
+    }
+    // get by distance
+    public List<ProjectWithDistance> getNearbyProjectsWithDistance(Double latitude, Double longitude, int distanceKm) {
+        return projectRepository.findNearbyProjectsWithDistance(latitude, longitude, (double) distanceKm);
+    }
+
+
 }

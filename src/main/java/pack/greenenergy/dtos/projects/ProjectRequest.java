@@ -19,4 +19,7 @@ public class ProjectRequest {
     private String typeEnergie;
 
     private LocalDateTime dateValidation;
+    private Long userId;
+    private Double latitude;
+    private Double longitude;
 }

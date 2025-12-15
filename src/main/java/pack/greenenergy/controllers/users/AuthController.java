@@ -40,7 +40,6 @@ public class AuthController {
         User user = new User();
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
-        user.setEmail(request.email());
         Role role = roleService.findByName("USER");
         user.setRoles(Set.of(role));
 

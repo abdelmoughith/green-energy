@@ -16,6 +16,8 @@ public class ProjectResponse {
     private String proprietaireUsername;
     private LocalDateTime dateCreation;
     private LocalDateTime dateValidation;
+    private Double latitude;
+    private Double longitude;
 }
 
 

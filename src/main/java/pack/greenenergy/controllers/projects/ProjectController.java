@@ -4,13 +4,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pack.greenenergy.dtos.projects.ProjectRequest;
 import pack.greenenergy.dtos.projects.ProjectResponse;
+import pack.greenenergy.dtos.projects.ProjectWithDistance;
 import pack.greenenergy.entities.projects.Project;
 import pack.greenenergy.exception.ForbiddenException;
 import pack.greenenergy.security.JwtUtils;
 import pack.greenenergy.services.projects.ProjectService;
+import tools.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,13 +35,29 @@ public class ProjectController {
     }
 
     // CREATE
+    /*
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<ProjectResponse> createProject(
+            @RequestParam("project") String dtoJson,
+            @RequestParam(value = "image", required = true) MultipartFile image,
+            HttpServletRequest request
+    ) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ProjectRequest dto = objectMapper.readValue(dtoJson, ProjectRequest.class);
+
+        Long ownerId = getUserId(request);
+        Project p = projectService.createProject(dto, ownerId, image);
+        return ResponseEntity.ok(toResponse(p));
+    }
+
+     */
     @PostMapping
     public ResponseEntity<ProjectResponse> createProject(
             @RequestBody ProjectRequest dto,
             HttpServletRequest request
-    ) {
+    ) throws IOException {
         Long ownerId = getUserId(request);
-        Project p = projectService.createProject(dto, ownerId);
+        Project p = projectService.createProject(dto, ownerId, null);
         return ResponseEntity.ok(toResponse(p));
     }
 
@@ -95,6 +115,16 @@ public class ProjectController {
         r.setProprietaireUsername(p.getProprietaire().getUsername());
         r.setDateCreation(p.getDateCreation());
         r.setDateValidation(p.getDateValidation());
+        r.setLatitude(p.getLatitude());
+        r.setLongitude(p.getLongitude());
         return r;
+    }
+    @GetMapping("/nearby")
+    public List<ProjectWithDistance> getNearbyProjects(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam int distanceKm
+    ) {
+        return projectService.getNearbyProjectsWithDistance(latitude, longitude, distanceKm);
     }
 }

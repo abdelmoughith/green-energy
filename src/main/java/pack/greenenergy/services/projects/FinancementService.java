@@ -25,6 +25,10 @@ public class FinancementService {
     private final UserRepository userRepository;
 
     public Financement financerProjet(Long projectId, Long userId, Double montant) {
+        if (montant == null || montant < 100) {
+            throw new IllegalArgumentException("Le montant doit être au minimum de 100");
+        }
+
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
         User user = userRepository.findById(userId)
@@ -42,6 +46,8 @@ public class FinancementService {
 
         return financementRepository.save(f);
     }
+
+
 
     // ---------------- GET ALL ----------------
     public List<Financement> getAllFinancements() {
