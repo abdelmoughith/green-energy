@@ -78,10 +78,10 @@ public class FinancementController {
     }
     // ---------------- GET BY PROJECT ----------------
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<FinancementResponse>> getByProject(@PathVariable Long projectId) {
+    public ResponseEntity<List<FinancementResponseFormated>> getByProject(@PathVariable Long projectId) {
         return ResponseEntity.ok(
                 financementService.getFinancementsByProject(projectId).stream()
-                        .map(this::toResponse)
+                        .map(this::toResponseFormated)
                         .toList()
         );
     }
