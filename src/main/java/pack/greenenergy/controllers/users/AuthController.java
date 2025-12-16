@@ -33,12 +33,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-        if (customUserService.existsByEmail(request.email())) {
+        if (customUserService.existsByEmail(request.username())) {
             throw new ValidationException("Email already exists");
         }
 
         User user = new User();
-        user.setEmail(request.email());
+        user.setEmail(request.username());
         user.setPassword(passwordEncoder.encode(request.password()));
         Role role = roleService.findByName("USER");
         user.setRoles(Set.of(role));
@@ -51,10 +51,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
 
-        User user = customUserService.findByEmail(request.email());
+        User user = customUserService.findByEmail(request.username());
         // Authentication authentication =
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())
+                new UsernamePasswordAuthenticationToken(request.username(), request.password())
         );
 
         String jwt = jwtUtils.generateToken(user);

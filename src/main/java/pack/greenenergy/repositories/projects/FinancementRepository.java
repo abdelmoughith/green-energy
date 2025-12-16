@@ -12,5 +12,6 @@ public interface FinancementRepository extends JpaRepository<Financement, Long> 
     List<Financement> findByProjectId(Long projectId);
 
     List<Financement> findByUserId(Long userId);
+    List<Financement> findAllByOrderByDateFinancementDesc();
 
 }

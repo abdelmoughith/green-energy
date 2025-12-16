@@ -34,6 +34,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             @Param("distance") Double distanceKm
     );
 
+    List<Project> findAllByOrderByDateCreationDesc();
+
 
 
 }

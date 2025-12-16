@@ -51,19 +51,19 @@ public class FinancementService {
 
     // ---------------- GET ALL ----------------
     public List<Financement> getAllFinancements() {
-        return financementRepository.findAll();
+        return financementRepository.findAllByOrderByDateFinancementDesc();
     }
 
     // ---------------- GET BY PROJECT ----------------
     public List<Financement> getFinancementsByProject(Long projectId) {
-        return financementRepository.findAll().stream()
+        return financementRepository.findAllByOrderByDateFinancementDesc().stream()
                 .filter(f -> f.getProject().getId().equals(projectId))
                 .toList();
     }
 
     // ---------------- GET BY USER ----------------
     public List<Financement> getFinancementsByUser(Long userId) {
-        return financementRepository.findAll().stream()
+        return financementRepository.findAllByOrderByDateFinancementDesc().stream()
                 .filter(f -> f.getUser().getId().equals(userId))
                 .toList();
     }

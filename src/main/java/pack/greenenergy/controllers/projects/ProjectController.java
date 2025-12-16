@@ -64,9 +64,22 @@ public class ProjectController {
     // READ ALL
     @GetMapping
     public ResponseEntity<List<ProjectResponse>> getAllProjects() {
+
         return ResponseEntity.ok(
                 projectService.getAllProjects().stream()
                         .map(this::toResponse)
+                        .toList()
+        );
+    }
+    @GetMapping("/mine")
+    public ResponseEntity<List<ProjectResponse>> getMineProjects(
+            HttpServletRequest request
+    ) {
+        Long ownerId = getUserId(request);
+        return ResponseEntity.ok(
+                projectService.getAllProjects().stream()
+                        .map(this::toResponse)
+                        .filter(f -> f.getProprietaireId().equals(ownerId))
                         .toList()
         );
     }
