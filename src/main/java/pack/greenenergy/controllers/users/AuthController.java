@@ -32,14 +32,26 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-        if (customUserService.existsByEmail(request.username())) {
+    public ResponseEntity<String> register(
+            @Valid @RequestBody RegisterRequest request
+    ) {
+        if (customUserService.existsByEmail(request.email())) {
+            throw new ValidationException("Email already exists");
+        }
+        if (customUserService.existsByEmail(request.email())) {
             throw new ValidationException("Email already exists");
         }
 
         User user = new User();
-        user.setEmail(request.username());
+        user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
+
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setPhoneNumber(request.phoneNumber());
+        user.setAddress(request.address());
+        user.setBirthday(request.birthday());
+
         Role role = roleService.findByName("USER");
         user.setRoles(Set.of(role));
 
@@ -47,6 +59,7 @@ public class AuthController {
 
         return ResponseEntity.ok("User registered successfully");
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
